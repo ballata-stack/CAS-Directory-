@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#215732" />
+    <meta
+      name="description"
+      content="International School Manila CAS activity, advisor, and student officer directory."
+    />
+    <title>ISM CAS Directory</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div id="login-screen" class="login-screen">
+      <div class="login-brand-panel">
+        <div class="brand-lockup brand-lockup--light">
+          <span class="brand-mark" aria-hidden="true">I</span>
+          <span>
+            <strong>ISM</strong>
+            <small>CAS Directory</small>
+          </span>
+        </div>
+        <div class="login-intro">
+          <p class="eyebrow eyebrow--yellow">Community · Activity · Service</p>
+          <h1>Every activity.<br />One clear directory.</h1>
+          <p>
+            Find advisors, officers, schedules, and meeting locations for the current school year.
+          </p>
+        </div>
+        <div class="login-pattern" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <p class="login-year">School Year <strong id="login-school-year">2026–2027</strong></p>
+      </div>
+
+      <main class="login-card-wrap">
+        <section class="login-card" aria-labelledby="signin-title">
+          <div class="mobile-brand brand-lockup">
+            <span class="brand-mark" aria-hidden="true">I</span>
+            <span><strong>ISM</strong><small>CAS Directory</small></span>
+          </div>
+          <p class="eyebrow">Welcome</p>
+          <h2 id="signin-title">Sign in to continue</h2>
+          <p class="login-copy">
+            Use your ISM Google Workspace account—no separate password required. Your access is based on your directory role.
+          </p>
+          <div class="sso-badge"><svg aria-hidden="true"><use href="#icon-shield"></use></svg>Google Workspace SSO</div>
+          <div id="google-signin-container" class="google-signin-container">
+            <button id="google-signin-fallback" class="button button--google" type="button">
+              <span class="google-g" aria-hidden="true">G</span>
+              Continue with Google
+            </button>
+          </div>
+          <p id="login-status" class="form-note" role="status"></p>
+
+          <div id="demo-access" class="demo-access" hidden>
+            <div class="divider"><span>Preview as</span></div>
+            <div class="demo-role-grid">
+              <button class="demo-role" type="button" data-demo-role="Student">
+                <span class="demo-role-icon" aria-hidden="true">S</span>
+                <span><strong>Student</strong><small>View and submit</small></span>
+              </button>
+              <button class="demo-role" type="button" data-demo-role="Teacher">
+                <span class="demo-role-icon" aria-hidden="true">T</span>
+                <span><strong>Teacher</strong><small>Manage activities</small></span>
+              </button>
+              <button class="demo-role" type="button" data-demo-role="Admin">
+                <span class="demo-role-icon" aria-hidden="true">A</span>
+                <span><strong>Admin</strong><small>Approve and maintain</small></span>
+              </button>
+            </div>
+            <p class="demo-note">Preview mode uses sample names and keeps changes on this device only.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="app-shell" class="app-shell" hidden>
+      <aside class="sidebar">
+        <div class="brand-lockup brand-lockup--light sidebar-brand">
+          <span class="brand-mark" aria-hidden="true">I</span>
+          <span><strong>ISM</strong><small>CAS Directory</small></span>
+        </div>
+
+        <nav class="primary-nav" aria-label="Main navigation">
+          <button class="nav-item is-active" type="button" data-view="directory">
+            <svg aria-hidden="true"><use href="#icon-directory"></use></svg>
+            <span>Directory</span>
+          </button>
+          <button class="nav-item" type="button" data-view="activities">
+            <svg aria-hidden="true"><use href="#icon-grid"></use></svg>
+            <span>Activities</span>
+          </button>
+          <button class="nav-item" type="button" data-view="submit">
+            <svg aria-hidden="true"><use href="#icon-edit"></use></svg>
+            <span id="submit-nav-label">Submit update</span>
+          </button>
+          <button class="nav-item" type="button" data-view="how-to">
+            <svg aria-hidden="true"><use href="#icon-help"></use></svg>
+            <span>How to</span>
+          </button>
+          <button class="nav-item admin-only" type="button" data-view="admin" hidden>
+            <svg aria-hidden="true"><use href="#icon-shield"></use></svg>
+            <span>Admin</span>
+            <span id="pending-nav-count" class="nav-count">0</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="year-label">Active school year</div>
+          <div id="sidebar-school-year" class="year-value">2026–2027</div>
+          <button id="signout-button" class="text-button text-button--light" type="button">
+            <svg aria-hidden="true"><use href="#icon-signout"></use></svg>
+            Sign out
+          </button>
+        </div>
+      </aside>
+
+      <div class="app-main">
+        <header class="topbar">
+          <div class="mobile-topbar-brand">
+            <span class="brand-mark brand-mark--small" aria-hidden="true">I</span>
+            <strong>CAS Directory</strong>
+          </div>
+          <button id="mobile-nav-button" class="icon-button mobile-nav-button" type="button" aria-label="Open menu" aria-expanded="false">
+            <svg aria-hidden="true"><use href="#icon-menu"></use></svg>
+          </button>
+          <div class="topbar-spacer"></div>
+          <label class="year-select-wrap">
+            <span>School year</span>
+            <select id="school-year-select" aria-label="School year"></select>
+          </label>
+          <button id="user-menu-button" class="user-chip" type="button" aria-label="Account menu">
+            <span id="user-avatar" class="user-avatar">AB</span>
+            <span class="user-chip-copy">
+              <strong id="user-name">Arbee Ballat</strong>
+              <small id="user-role">Administrator</small>
+            </span>
+            <svg aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+          </button>
+        </header>
+
+        <main class="workspace">
+          <section id="view-directory" class="view is-active" data-view-panel="directory">
+            <div class="page-heading">
+              <div>
+                <p class="eyebrow">CAS Organizations</p>
+                <h1>Directory</h1>
+                <p>Advisors, student leaders, and meeting information in one place.</p>
+              </div>
+              <button class="button button--primary can-submit" type="button" data-go-view="submit">
+                <svg aria-hidden="true"><use href="#icon-plus"></use></svg>
+                Submit an update
+              </button>
+            </div>
+
+            <div class="stat-grid" aria-label="Directory summary">
+              <article class="stat-card stat-card--accent">
+                <span class="stat-icon"><svg aria-hidden="true"><use href="#icon-grid"></use></svg></span>
+                <span><small>Activities</small><strong id="stat-activities">0</strong></span>
+              </article>
+              <article class="stat-card">
+                <span class="stat-icon"><svg aria-hidden="true"><use href="#icon-teacher"></use></svg></span>
+                <span><small>Advisors</small><strong id="stat-advisors">0</strong></span>
+              </article>
+              <article class="stat-card">
+                <span class="stat-icon"><svg aria-hidden="true"><use href="#icon-student"></use></svg></span>
+                <span><small>Student officers</small><strong id="stat-students">0</strong></span>
+              </article>
+              <article class="stat-card admin-only" hidden>
+                <span class="stat-icon"><svg aria-hidden="true"><use href="#icon-clock"></use></svg></span>
+                <span><small>Pending approval</small><strong id="stat-pending">0</strong></span>
+              </article>
+            </div>
+
+            <section class="surface directory-surface">
+              <div class="filter-bar">
+                <label class="search-field">
+                  <svg aria-hidden="true"><use href="#icon-search"></use></svg>
+                  <input id="directory-search" type="search" placeholder="Search activity, teacher, student, or position" autocomplete="off" />
+                  <kbd>/</kbd>
+                </label>
+                <label class="compact-field">
+                  <span>Category</span>
+                  <select id="category-filter"><option value="">All categories</option></select>
+                </label>
+                <label class="compact-field">
+                  <span>Show</span>
+                  <select id="role-filter">
+                    <option value="">Everyone</option>
+                    <option value="Advisor">Teachers only</option>
+                    <option value="Student Officer">Students only</option>
+                  </select>
+                </label>
+                <button id="clear-filters" class="button button--quiet" type="button">Clear</button>
+              </div>
+
+              <div class="results-meta">
+                <p><strong id="directory-result-count">0</strong> results</p>
+                <button id="export-directory" class="text-button admin-only" type="button" hidden>
+                  <svg aria-hidden="true"><use href="#icon-download"></use></svg>
+                  Export CSV
+                </button>
+              </div>
+
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Activity</th>
+                      <th scope="col">Advisor(s)</th>
+                      <th scope="col">Student leadership</th>
+                      <th scope="col">Meeting</th>
+                      <th scope="col"><span class="sr-only">View details</span></th>
+                    </tr>
+                  </thead>
+                  <tbody id="directory-table-body"></tbody>
+                </table>
+                <div id="directory-empty" class="empty-state" hidden>
+                  <span class="empty-icon"><svg aria-hidden="true"><use href="#icon-search"></use></svg></span>
+                  <h3>No matching activities</h3>
+                  <p>Try a different name, category, or role filter.</p>
+                  <button class="button button--quiet" type="button" data-clear-filters>Clear filters</button>
+                </div>
+              </div>
+            </section>
+          </section>
+
+          <section id="view-activities" class="view" data-view-panel="activities" hidden>
+            <div class="page-heading">
+              <div>
+                <p class="eyebrow">Browse by group</p>
+                <h1>Activities</h1>
+                <p>Explore every CAS organization and its current student leadership.</p>
+              </div>
+              <label class="activities-search search-field search-field--compact">
+                <svg aria-hidden="true"><use href="#icon-search"></use></svg>
+                <input id="activities-search" type="search" placeholder="Find an activity" autocomplete="off" />
+              </label>
+            </div>
+            <div id="category-tabs" class="category-tabs" role="tablist" aria-label="Activity categories"></div>
+            <div class="activities-toolbar">
+              <p id="activities-heading"><strong>All activities</strong></p>
+              <div class="view-toggle" role="group" aria-label="Activity layout">
+                <button class="is-active" type="button" data-layout="grid" aria-label="Grid view">
+                  <svg aria-hidden="true"><use href="#icon-grid"></use></svg>
+                </button>
+                <button type="button" data-layout="list" aria-label="List view">
+                  <svg aria-hidden="true"><use href="#icon-list"></use></svg>
+                </button>
+              </div>
+            </div>
+            <div id="activities-grid" class="activities-grid"></div>
+          </section>
+
+          <section id="view-submit" class="view" data-view-panel="submit" hidden>
+            <div class="page-heading page-heading--narrow">
+              <div>
+                <p class="eyebrow">Approval workflow</p>
+                <h1>Submit an update</h1>
+                <p>Your request will appear in the directory after an administrator approves it.</p>
+              </div>
+            </div>
+            <div class="form-layout">
+              <form id="request-form" class="surface form-card">
+                <div class="form-section-heading">
+                  <span class="step-number">1</span>
+                  <div><h2>What would you like to change?</h2><p>Select the request that best matches your update.</p></div>
+                </div>
+                <div id="request-type-options" class="request-type-grid" role="radiogroup" aria-label="Request type"></div>
+
+                <div class="form-section-heading">
+                  <span class="step-number">2</span>
+                  <div><h2>Activity details</h2><p>Choose an activity and provide the new information.</p></div>
+                </div>
+                <div class="form-grid">
+                  <label class="field field--wide">
+                    <span>Activity <b aria-hidden="true">*</b></span>
+                    <select id="request-activity" name="activityId" required></select>
+                  </label>
+                  <label id="new-activity-name-field" class="field field--wide" hidden>
+                    <span>New activity name <b aria-hidden="true">*</b></span>
+                    <input id="new-activity-name" name="newActivityName" type="text" placeholder="Enter the complete activity name" />
+                  </label>
+                  <label id="new-activity-category-field" class="field field--wide" hidden>
+                    <span>Category <b aria-hidden="true">*</b></span>
+                    <select id="new-activity-category" name="newActivityCategory"></select>
+                  </label>
+                  <label class="field">
+                    <span>Meeting location</span>
+                    <input id="meeting-location" name="meetingLocation" type="text" placeholder="e.g., Room 3058" />
+                  </label>
+                  <label class="field">
+                    <span>Day</span>
+                    <select id="meeting-day" name="meetingDay">
+                      <option value="">Select day</option>
+                      <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
+                      <option>Thursday</option><option>Friday</option><option>By arrangement</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span>Time</span>
+                    <input id="meeting-time" name="meetingTime" type="text" placeholder="e.g., Lunch / 11:30–12:10" />
+                  </label>
+                </div>
+
+                <div id="people-fields">
+                  <div class="form-section-heading">
+                    <span class="step-number">3</span>
+                    <div><h2>People and positions</h2><p>Select a name from the current school list or enter it manually.</p></div>
+                  </div>
+                  <div class="form-grid">
+                    <label class="field field--wide">
+                      <span id="person-field-label">Name</span>
+                      <select id="person-select" name="personId"></select>
+                    </label>
+                    <label class="check-field field--wide">
+                      <input id="manual-name-toggle" type="checkbox" />
+                      <span>Name not listed? Enter it manually.</span>
+                    </label>
+                    <label id="manual-name-field" class="field field--wide" hidden>
+                      <span>Full name <b aria-hidden="true">*</b></span>
+                      <input id="manual-name" name="manualName" type="text" placeholder="Last Name, First Name" pattern="[^,]+,\s*.+" />
+                      <small>Required format: Last Name, First Name</small>
+                    </label>
+                    <label id="position-field" class="field field--wide">
+                      <span>Position</span>
+                      <select id="position-select" name="position"></select>
+                    </label>
+                    <label id="other-position-field" class="field field--wide" hidden>
+                      <span>Other position <b aria-hidden="true">*</b></span>
+                      <input id="other-position" name="otherPosition" type="text" placeholder="Enter the position" />
+                    </label>
+                  </div>
+                  <div id="co-president-note" class="inline-notice" hidden>
+                    <svg aria-hidden="true"><use href="#icon-info"></use></svg>
+                    <p>A President is already listed. Both students will appear as <strong>Co-President</strong> when this request is approved.</p>
+                  </div>
+                </div>
+
+                <label class="field field--wide">
+                  <span>Reason or notes</span>
+                  <textarea id="request-notes" name="notes" rows="4" placeholder="Add any information the administrator should know."></textarea>
+                </label>
+                <div class="form-actions">
+                  <button class="button button--quiet" type="reset">Clear form</button>
+                  <button class="button button--primary" type="submit">
+                    <svg aria-hidden="true"><use href="#icon-send"></use></svg>
+                    Send for approval
+                  </button>
+                </div>
+              </form>
+
+              <aside class="submit-aside">
+                <section class="surface guidance-card">
+                  <span class="guidance-icon"><svg aria-hidden="true"><use href="#icon-clock"></use></svg></span>
+                  <h2>What happens next?</h2>
+                  <ol>
+                    <li><span>1</span><p>Your request is sent to the CAS administrators.</p></li>
+                    <li><span>2</span><p>An administrator reviews the proposed change.</p></li>
+                    <li><span>3</span><p>Approved information appears in the live directory.</p></li>
+                  </ol>
+                </section>
+                <section class="surface my-requests-card">
+                  <div class="card-heading-row"><h2>My recent requests</h2><span id="my-request-count" class="count-badge">0</span></div>
+                  <div id="my-requests-list" class="compact-list"></div>
+                </section>
+              </aside>
+            </div>
+          </section>
+
+          <section id="view-how-to" class="view" data-view-panel="how-to" hidden>
+            <div class="page-heading tutorial-heading">
+              <div>
+                <p class="eyebrow">Quick guide</p>
+                <h1>How to use the directory</h1>
+                <p>Choose your role for a short guide to viewing and submitting information.</p>
+              </div>
+              <button id="print-guide-button" class="button button--quiet" type="button">
+                <svg aria-hidden="true"><use href="#icon-print"></use></svg>
+                Print this guide
+              </button>
+            </div>
+
+            <div class="tutorial-role-tabs" role="tablist" aria-label="Tutorial role">
+              <button class="is-active" type="button" role="tab" aria-selected="true" data-guide="teacher">
+                <span class="tutorial-tab-icon">T</span>
+                <span><strong>Teacher guide</strong><small>Activities, advisors, and student officers</small></span>
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-guide="student">
+                <span class="tutorial-tab-icon">S</span>
+                <span><strong>Student guide</strong><small>Find activities and submit your position</small></span>
+              </button>
+            </div>
+
+            <section id="guide-teacher" class="tutorial-panel" data-guide-panel="teacher">
+              <div class="tutorial-intro surface">
+                <span class="tutorial-intro-number">T</span>
+                <div><p class="eyebrow">For teachers</p><h2>Update your activity in a few minutes</h2><p>Requests are reviewed by an administrator before the public directory changes.</p></div>
+              </div>
+              <div class="tutorial-steps">
+                <article class="tutorial-step"><span class="tutorial-step-number">1</span><div><h3>Sign in</h3><p>Use your school Google account. The site will recognize your teacher access automatically.</p></div></article>
+                <article class="tutorial-step"><span class="tutorial-step-number">2</span><div><h3>Open “Submit update”</h3><p>Choose what you need to change: meeting details, advisor, student officer, or the activity itself.</p></div></article>
+                <article class="tutorial-step"><span class="tutorial-step-number">3</span><div><h3>Select the activity</h3><p>Choose the club or activity from the dropdown. For a new activity, enter its complete name and category.</p></div></article>
+                <article class="tutorial-step"><span class="tutorial-step-number">4</span><div><h3>Enter the information</h3><p>Add the meeting location, day, and time. For people, select a name from the school list.</p><div class="tutorial-example"><span>Meeting Location</span><strong>Room 2097</strong><span>Day</span><strong>Wednesday</strong><span>Time</span><strong>Lunch</strong></div></div></article>
+                <article class="tutorial-step"><span class="tutorial-step-number">5</span><div><h3>Add student officers</h3><p>Select the student and position. If the name or position is missing, choose the manual or “Others” option.</p><div class="tutorial-tip"><svg aria-hidden="true"><use href="#icon-info"></use></svg><p>Enter manual names as <strong>Last Name, First Name</strong>. If a second President is approved, both appear as Co-President.</p></div></div></article>
+                <article class="tutorial-step"><span class="tutorial-step-number">6</span><div><h3>Send and track the request</h3><p>Add an optional note, select “Send for approval,” then check “My recent requests” for its status.</p></div></article>
+              </div>
+            </section>
+
+            <section id="guide-student" class="tutorial-panel" data-guide-panel="student" hidden>
+              <div class="tutorial-intro surface">
+                <span class="tutorial-intro-number">S</span>
+                <div><p class="eyebrow">For students</p><h2>Find an activity or submit your role</h2><p>You can browse the directory and request a correction to your own leadership position.</p></div>
+              </div>
+              <div class="tutorial-steps">
+                <article class="tutorial-step"><span class="tutorial-step-number">1</span><div><h3>Sign in</h3><p>Use your school Google account. Your student access is assigned from the school list.</p></div></article>
+                <article class="tutorial-step"><span class="tutorial-step-number">2</span><div><h3>Find an activity</h3><p>Use Directory search for an activity, advisor, student, or position. Use the filters to show only a category or student officers.</p></div></article>
+                <article class="tutorial-step"><span class="tutorial-step-number">3</span><div><h3>View complete details</h3><p>Select an activity to see its advisors, student leadership, meeting location, day, and time.</p></div></article>
+                <article class="tutorial-step"><span class="tutorial-step-number">4</span><div><h3>Submit your position</h3><p>Open “Submit a request,” select “Add or update my position,” choose the activity, and select your position.</p></div></article>
+                <article class="tutorial-step"><span class="tutorial-step-number">5</span><div><h3>Use “Others” when needed</h3><p>If your exact position is not listed, choose “Others” and type the full position name.</p><div class="tutorial-tip"><svg aria-hidden="true"><use href="#icon-info"></use></svg><p>Your name comes from your signed-in school account, so another student cannot submit a position in your name.</p></div></div></article>
+                <article class="tutorial-step"><span class="tutorial-step-number">6</span><div><h3>Wait for approval</h3><p>Your request stays Pending until an administrator reviews it. Approved changes then appear in the directory.</p></div></article>
+              </div>
+            </section>
+          </section>
+
+          <section id="view-admin" class="view" data-view-panel="admin" hidden>
+            <div class="page-heading">
+              <div>
+                <p class="eyebrow">Administration</p>
+                <h1>Review and maintain</h1>
+                <p>Approve requests, update source lists, and prepare the next school year.</p>
+              </div>
+              <button id="admin-export" class="button button--quiet" type="button">
+                <svg aria-hidden="true"><use href="#icon-download"></use></svg>
+                Export directory
+              </button>
+            </div>
+
+            <div class="admin-summary">
+              <button class="admin-summary-card is-active" type="button" data-admin-section="pending">
+                <span><svg aria-hidden="true"><use href="#icon-clock"></use></svg></span>
+                <small>Pending requests</small><strong id="admin-pending-count">0</strong>
+              </button>
+              <button class="admin-summary-card" type="button" data-admin-section="people">
+                <span><svg aria-hidden="true"><use href="#icon-people"></use></svg></span>
+                <small>Active people</small><strong id="admin-people-count">0</strong>
+              </button>
+              <button class="admin-summary-card" type="button" data-admin-section="maintenance">
+                <span><svg aria-hidden="true"><use href="#icon-settings"></use></svg></span>
+                <small>Directory tools</small><strong>Manage</strong>
+              </button>
+            </div>
+
+            <section id="admin-section-pending" class="admin-section is-active">
+              <div class="section-heading">
+                <div><h2>Approval queue</h2><p>Review changes before they appear in the directory.</p></div>
+                <label class="compact-field compact-field--inline"><span>Status</span><select id="request-status-filter"><option value="Pending">Pending</option><option value="Approved">Approved</option><option value="Rejected">Rejected</option><option value="">All requests</option></select></label>
+              </div>
+              <div id="approval-queue" class="approval-queue"></div>
+            </section>
+
+            <section id="admin-section-people" class="admin-section" hidden>
+              <div class="section-heading"><div><h2>People lists</h2><p>These records sync with the separate Students, Teachers, and Admins tabs in Google Sheets.</p></div><button id="add-person-button" class="button button--primary" type="button"><svg aria-hidden="true"><use href="#icon-plus"></use></svg>Add person</button></div>
+              <section class="surface people-panel">
+                <div class="filter-bar filter-bar--simple">
+                  <label class="search-field"><svg aria-hidden="true"><use href="#icon-search"></use></svg><input id="people-search" type="search" placeholder="Search name or email" /></label>
+                  <label class="compact-field"><span>Type</span><select id="people-type-filter"><option value="">Everyone</option><option>Teacher</option><option>Student</option><option>Admin</option></select></label>
+                </div>
+                <div id="people-table-wrap" class="table-wrap"></div>
+              </section>
+            </section>
+
+            <section id="admin-section-maintenance" class="admin-section" hidden>
+              <div class="maintenance-grid">
+                <section class="surface maintenance-card">
+                  <span class="maintenance-icon"><svg aria-hidden="true"><use href="#icon-grid"></use></svg></span>
+                  <h2>Activity records</h2>
+                  <p>Add a new activity or edit meeting information directly.</p>
+                  <button id="manage-activity-button" class="button button--quiet" type="button">Manage activities</button>
+                </section>
+                <section class="surface maintenance-card">
+                  <span class="maintenance-icon"><svg aria-hidden="true"><use href="#icon-audit"></use></svg></span>
+                  <h2>Audit history</h2>
+                  <p>See who approved, changed, or removed directory records.</p>
+                  <button id="view-audit-button" class="button button--quiet" type="button">View activity log</button>
+                </section>
+                <section class="surface maintenance-card maintenance-card--danger">
+                  <span class="maintenance-icon"><svg aria-hidden="true"><use href="#icon-refresh"></use></svg></span>
+                  <h2>Start a new school year</h2>
+                  <p>Keep activities and teacher advisors, then clear all student officer assignments.</p>
+                  <button id="reset-year-button" class="button button--danger" type="button">Prepare next school year</button>
+                </section>
+              </div>
+            </section>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay" hidden></div>
+
+    <aside id="activity-drawer" class="drawer" aria-hidden="true" aria-labelledby="drawer-title">
+      <div class="drawer-backdrop" data-close-drawer></div>
+      <section class="drawer-panel">
+        <button class="icon-button drawer-close" type="button" data-close-drawer aria-label="Close details">
+          <svg aria-hidden="true"><use href="#icon-close"></use></svg>
+        </button>
+        <div id="drawer-content"></div>
+      </section>
+    </aside>
+
+    <dialog id="confirm-dialog" class="dialog">
+      <form method="dialog" class="dialog-card">
+        <div id="dialog-icon" class="dialog-icon"><svg aria-hidden="true"><use href="#icon-info"></use></svg></div>
+        <h2 id="dialog-title">Confirm action</h2>
+        <p id="dialog-message"></p>
+        <label id="dialog-input-wrap" class="field" hidden><span id="dialog-input-label">Note</span><input id="dialog-input" type="text" /></label>
+        <div class="dialog-actions">
+          <button class="button button--quiet" value="cancel">Cancel</button>
+          <button id="dialog-confirm-button" class="button button--primary" value="confirm">Confirm</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="editor-dialog" class="dialog dialog--wide">
+      <form id="editor-form" class="dialog-card">
+        <button class="icon-button dialog-close" type="button" data-close-editor aria-label="Close editor"><svg aria-hidden="true"><use href="#icon-close"></use></svg></button>
+        <p id="editor-eyebrow" class="eyebrow">Directory maintenance</p>
+        <h2 id="editor-title">Add person</h2>
+        <div id="editor-fields" class="form-grid"></div>
+        <div class="dialog-actions">
+          <button class="button button--quiet" type="button" data-close-editor>Cancel</button>
+          <button id="editor-submit" class="button button--primary" type="submit">Save</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+    <svg class="svg-sprite" aria-hidden="true">
+      <symbol id="icon-directory" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v17H6.5A2.5 2.5 0 0 0 4 22V5.5Zm16 0A2.5 2.5 0 0 0 17.5 3H13v17h4.5A2.5 2.5 0 0 1 20 22V5.5Z"/></symbol>
+      <symbol id="icon-grid" viewBox="0 0 24 24"><path d="M4 4h6v6H4V4Zm10 0h6v6h-6V4ZM4 14h6v6H4v-6Zm10 0h6v6h-6v-6Z"/></symbol>
+      <symbol id="icon-list" viewBox="0 0 24 24"><path d="M4 5h3v3H4V5Zm5 .5h11v2H9v-2ZM4 10.5h3v3H4v-3ZM9 11h11v2H9v-2ZM4 16h3v3H4v-3Zm5 .5h11v2H9v-2Z"/></symbol>
+      <symbol id="icon-edit" viewBox="0 0 24 24"><path d="M5 4h9v2H6v12h12v-8h2v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Zm12.6-1.1 3.5 3.5L12 15.5 8 16l.5-4 9.1-9.1Z"/></symbol>
+      <symbol id="icon-shield" viewBox="0 0 24 24"><path d="m12 2 8 3v6c0 5-3.4 9.7-8 11-4.6-1.3-8-6-8-11V5l8-3Zm-1 13.2 5.7-5.7-1.4-1.4-4.3 4.3-2.3-2.3-1.4 1.4 3.7 3.7Z"/></symbol>
+      <symbol id="icon-signout" viewBox="0 0 24 24"><path d="M5 3h8v2H5v14h8v2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm11.6 4.6L21 12l-4.4 4.4-1.4-1.4 2-2H9v-2h8.2l-2-2 1.4-1.4Z"/></symbol>
+      <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/></symbol>
+      <symbol id="icon-chevron-down" viewBox="0 0 24 24"><path d="m7 9 5 5 5-5 1.4 1.4L12 16.8l-6.4-6.4L7 9Z"/></symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5Z"/></symbol>
+      <symbol id="icon-teacher" viewBox="0 0 24 24"><path d="M12 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8ZM4 20c0-4.4 3.6-7 8-7s8 2.6 8 7v1H4v-1Z"/></symbol>
+      <symbol id="icon-student" viewBox="0 0 24 24"><path d="m2 8 10-5 10 5-10 5L2 8Zm4 3.2 6 3 6-3V17c-1.5 1.5-3.5 2.2-6 2.2S7.5 18.5 6 17v-5.8ZM21 10h1v7h-1v-7Z"/></symbol>
+      <symbol id="icon-clock" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm-1 3h2v4.6l3.2 3.2-1.4 1.4-3.8-3.8V7Z"/></symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24"><path d="M10.5 3a7.5 7.5 0 1 1-4.7 13.4L2.2 20l1.4 1.4 3.6-3.6A7.5 7.5 0 0 1 10.5 3Zm0 2a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Z"/></symbol>
+      <symbol id="icon-download" viewBox="0 0 24 24"><path d="M11 3h2v10.2l3.3-3.3 1.4 1.4-5.7 5.7-5.7-5.7 1.4-1.4 3.3 3.3V3ZM4 19h16v2H4v-2Z"/></symbol>
+      <symbol id="icon-send" viewBox="0 0 24 24"><path d="m3 3 19 9-19 9 1.8-7.3L15 12 4.8 10.3 3 3Z"/></symbol>
+      <symbol id="icon-info" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm-1 8v7h2v-7h-2Zm0-3v2h2V7h-2Z"/></symbol>
+      <symbol id="icon-people" viewBox="0 0 24 24"><path d="M9 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8Zm7.5 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6ZM2 20c0-4.4 3.1-7 7-7s7 2.6 7 7v1H2v-1Zm14.2-5.8c3.4.5 5.8 2.8 5.8 6.3v.5h-4a9.6 9.6 0 0 0-1.8-6.8Z"/></symbol>
+      <symbol id="icon-settings" viewBox="0 0 24 24"><path d="M10.4 2h3.2l.7 2.4 1.5.9 2.4-.6 1.6 2.7-1.7 1.8v1.7l1.7 1.8-1.6 2.7-2.4-.6-1.5.9-.7 2.4h-3.2l-.7-2.4-1.5-.9-2.4.6-1.6-2.7 1.7-1.8V9.2L4.2 7.4l1.6-2.7 2.4.6 1.5-.9.7-2.4ZM12 7a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/></symbol>
+      <symbol id="icon-audit" viewBox="0 0 24 24"><path d="M5 3h14v18H5V3Zm2 2v14h10V5H7Zm2 3h6v2H9V8Zm0 4h6v2H9v-2Zm0 4h4v2H9v-2Z"/></symbol>
+      <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M19.5 6.5V3l-1.8 1.8A9 9 0 1 0 21 12h-2a7 7 0 1 1-2.7-5.5L14 8.8h5.5V6.5Z"/></symbol>
+      <symbol id="icon-help" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm-.1 3c2.4 0 4.1 1.4 4.1 3.5 0 1.7-.9 2.6-2.2 3.4-.9.6-1.1.9-1.1 1.8h-2c0-1.7.5-2.4 1.8-3.2.9-.6 1.4-1 1.4-1.9 0-1-.8-1.7-2-1.7-1.1 0-1.9.6-2.5 1.5L8 9.2C8.9 7.8 10.2 7 11.9 7ZM11 17h2v2h-2v-2Z"/></symbol>
+      <symbol id="icon-print" viewBox="0 0 24 24"><path d="M6 3h12v5H6V3Zm2 2v1h8V5H8ZM5 9h14a3 3 0 0 1 3 3v5h-4v4H6v-4H2v-5a3 3 0 0 1 3-3Zm3 7v3h8v-5H8v2Zm10-4h2a1 1 0 0 0-1-1h-1v1Z"/></symbol>
+      <symbol id="icon-close" viewBox="0 0 24 24"><path d="m5.6 4.2 6.4 6.4 6.4-6.4 1.4 1.4-6.4 6.4 6.4 6.4-1.4 1.4-6.4-6.4-6.4 6.4-1.4-1.4 6.4-6.4-6.4-6.4 1.4-1.4Z"/></symbol>
+    </svg>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
